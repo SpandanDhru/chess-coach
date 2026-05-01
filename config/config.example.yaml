@@ -1,0 +1,37 @@
+# Chess AI Coach Configuration
+
+# Database settings
+database:
+  path: "data/chess_coach.db"
+
+# OpenAI API settings
+openai:
+  api_key: "sk-your-api-key-here"
+  model: "gpt-4o-mini"  # or "gpt-4o" for better quality
+
+# Stockfish settings
+stockfish:
+  path: "/usr/games/stockfish"  # Update for your system
+  depth: 20  # 18-22 recommended
+  threads: 1  # Number of CPU threads to use
+
+# Lichess settings (optional)
+lichess:
+  api_token: ""  # Optional: for higher rate limits and private games
+  username: "your_lichess_username"
+
+# Chess.com settings
+chesscom:
+  username: "your_chesscom_username"
+
+# User profile
+user:
+  rating: 1500  # Your approximate rating for explanation calibration
+  preferred_platforms: ["lichess", "chesscom"]
+
+# Analysis settings
+analysis:
+  auto_analyze_new_games: true
+  skip_already_analyzed: true
+  explain_all_blunders: true
+  explain_critical_mistakes: false  # Set true to explain 100-300cp mistakes too
