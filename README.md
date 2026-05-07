@@ -1,5 +1,6 @@
 # Chess AI Coach
 
+Note: GitHub repo in progress; Will be updated soon.
 A personal chess coaching agent that analyzes your games from Chess.com and Lichess using Stockfish and OpenAI's API to help you improve.
 
 ## Features
