@@ -4,11 +4,11 @@ A personal chess coaching agent that analyzes your games from Chess.com and Lich
 
 ## Features
 
-- 🎮 Import games from Chess.com and Lichess
-- 🔍 Deep position analysis with Stockfish
-- 🤖 AI-powered coaching insights via OpenAI API
-- 📊 Track patterns, openings, and improvement areas
-- 💡 Personalized recommendations based on your play style
+- Import games from Chess.com and Lichess
+- Deep position analysis with Stockfish
+- AI-powered coaching insights via OpenAI API
+- Track patterns, openings, and improvement areas
+- Personalized recommendations based on your play style
 
 ## Project Structure
 
