@@ -5,7 +5,13 @@ httpx==0.27.0
 sqlalchemy==2.0.23
 click==8.1.7
 pyyaml==6.0.1
-openai==1.12.0
+openai>=1.54.0
+python-dotenv==1.0.1
+numpy>=1.26.0  # cosine-similarity retrieval for the RAG `ask` command
+
+# Desktop-app backend (FastAPI sidecar for the Electron + React UI)
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
 
 # Optional but recommended
 pandas==2.2.0

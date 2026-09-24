@@ -6,6 +6,43 @@ from datetime import datetime
 from dataclasses import dataclass
 
 
+def speed_bucket(time_control: Optional[str], platform: str) -> str:
+    """Normalize a game's time control into a speed bucket.
+
+    Both platforms are collapsed onto Lichess-style buckets so aggregation can
+    group across sources. Lichess already stores the bucket name in
+    ``time_control`` (we set it from the game's ``speed``); Chess.com stores the
+    base time in seconds (e.g. "600", or "180+2"), which we bucket by the FIDE-ish
+    thresholds Lichess uses (estimated seconds = base + 40 * increment).
+    """
+    if not time_control:
+        return "unknown"
+    tc = time_control.strip().lower()
+
+    # Lichess (or an already-bucketed value): pass known names straight through.
+    known = {"ultrabullet", "bullet", "blitz", "rapid", "classical", "correspondence"}
+    if tc in known:
+        return "ultrabullet" if tc == "ultrabullet" else tc
+
+    # Chess.com: "600" or "180+2" (seconds), or "1/259200" for daily/correspondence.
+    if tc.startswith("1/"):
+        return "correspondence"
+    base, _, inc = tc.partition("+")
+    try:
+        estimated = int(base) + 40 * int(inc or 0)
+    except ValueError:
+        return "unknown"
+    if estimated < 29:
+        return "ultrabullet"
+    if estimated < 179:
+        return "bullet"
+    if estimated < 479:
+        return "blitz"
+    if estimated < 1499:
+        return "rapid"
+    return "classical"
+
+
 @dataclass
 class GameMetadata:
     """Normalized game metadata across platforms."""

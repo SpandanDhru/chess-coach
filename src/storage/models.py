@@ -3,7 +3,7 @@
 from sqlalchemy import (
     Column, Integer, String, Float, DateTime, Boolean, ForeignKey, JSON, Text
 )
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
@@ -142,6 +142,28 @@ class Pattern(Base):
     first_seen = Column(DateTime, default=datetime.utcnow)
     last_seen = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class Embedding(Base):
+    """A single RAG document (aggregate/pattern text) and its embedding vector.
+
+    The knowledge base is a *derived* index built from the aggregate and pattern
+    tables: each row is one natural-language document plus the embedding used for
+    semantic retrieval. Vectors are stored as JSON lists so they are directly
+    inspectable (SELECT-able) — the whole point being that the RAG store lives
+    inside the same SQLite database as everything else.
+    """
+
+    __tablename__ = "embeddings"
+
+    id = Column(Integer, primary_key=True)
+    doc_id = Column(String, nullable=False, index=True)  # e.g. "opening:Italian Game"
+    source_type = Column(String, nullable=False)  # 'opening' | 'phase' | 'time_control' | 'pattern'
+    username = Column(String, index=True)  # scope; NULL = all players
+    text = Column(Text, nullable=False)
+    vector = Column(JSON, nullable=False)  # list[float]
+
+    built_at = Column(DateTime, default=datetime.utcnow)
 
 
 class SyncState(Base):

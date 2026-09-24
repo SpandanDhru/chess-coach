@@ -1,0 +1,120 @@
+/* Retro terminal theme — Claude Code / OpenCode flavored, 8-bit CRT feel. */
+
+:root {
+  --bg: #0a0a0b;
+  --bg-panel: #101013;
+  --bg-elev: #16161a;
+  --border: #26262d;
+  --text: #cdc7b8; /* warm off-white / beige phosphor */
+  --text-dim: #7d7768;
+  --accent: #e0a458; /* amber */
+  --accent-2: #7ec66b; /* terminal green */
+  --danger: #d9614c;
+
+  /* Chessboard */
+  --sq-light: #e8d2a6;
+  --sq-dark: #9c6b3f;
+  --sq-mark: rgba(224, 164, 88, 0.55);
+
+  /* Pixel pieces */
+  --piece-light: #f2e6c8;
+  --piece-light-outline: #1a1712;
+  --piece-dark: #26221c;
+  --piece-dark-outline: #d8cbb0;
+
+  --mono: "DejaVu Sans Mono", "Menlo", "Consolas", "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: none;
+  overflow: hidden;
+}
+
+/* Global scanline / CRT vignette overlay. */
+#root::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+.blink {
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  to {
+    opacity: 0;
+  }
+}
+
+button {
+  font-family: var(--mono);
+  color: var(--text);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+button.active {
+  border-color: var(--accent);
+  color: var(--bg);
+  background: var(--accent);
+}
+
+input {
+  font-family: var(--mono);
+  color: var(--text);
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.dim {
+  color: var(--text-dim);
+}
+.accent {
+  color: var(--accent);
+}
+.green {
+  color: var(--accent-2);
+}
+.danger {
+  color: var(--danger);
+}
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+}
